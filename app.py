@@ -49,7 +49,6 @@ def encode_image(image):
     buffered = io.BytesIO()
     image.save(buffered, format="PNG")
     return base64.b64encode(buffered.getvalue()).decode('utf-8')
-
 def analyze_leaf_disease(image):
     """Analyze leaf image using backend proxy"""
     # Backend proxy URL - replace with your actual backend URL
@@ -66,7 +65,16 @@ def analyze_leaf_disease(image):
             headers={"Content-Type": "application/json"}
         )
         
-        response.raise_for_status()
+        # Log the full response for debugging
+        print(f"Backend Response Status: {response.status_code}")
+        print(f"Backend Response Content: {response.text}")
+
+        # Check response status
+        if response.status_code != 200:
+            error_details = response.json().get('error', 'Unknown error')
+            st.error(f"Backend Error: {error_details}")
+            return None
+
         result = response.json()
         
         # Check if analysis is in the response
