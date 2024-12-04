@@ -54,7 +54,7 @@ def encode_image(image):
 def analyze_leaf_disease(image):
     """Analyze leaf image using Claude API"""
     # Replace with your actual API key
-    api_key = st.secrets.get("ANTHROPIC_API_KEY")
+    api_key = st.secrets.get("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")
     
     if not api_key:
         st.error("API Key not configured. Please set up Anthropic API key.")
